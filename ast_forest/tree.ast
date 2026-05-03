@@ -1,0 +1,40 @@
+( ;
+	( main
+		( "start"
+			nil
+			nil
+		)
+		( ;
+			( ;
+				nil
+				( :=
+					( "x"
+						nil
+						nil
+					)
+					( +
+						( 5
+							nil
+							nil
+						)
+						( 5
+							nil
+							nil
+						)
+					)
+				)
+			)
+			( ;
+				( return
+					( 0
+						nil
+						nil
+					)
+					nil
+				)
+				nil
+			)
+		)
+	)
+	nil
+)
