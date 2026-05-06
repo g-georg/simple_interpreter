@@ -6,7 +6,6 @@
 
 namespace assembler {
 
-
 AssemblerErrorHandler Assembler::ReadSourceFile(std::string_view filename) {
   AssemblerErrorHandler handler;
 
@@ -27,9 +26,10 @@ AssemblerErrorHandler Assembler::ReadSourceFile(std::string_view filename) {
   return handler;
 }
 
-
 AssemblerErrorHandler Assembler::AssembleProgram() {
   AssemblerErrorHandler handler;
+
+  instruction_pointer_ = 0;
 
   auto status = RunFirstPass();
   if (!IsSuccess(status)) {
@@ -38,7 +38,9 @@ AssemblerErrorHandler Assembler::AssembleProgram() {
   }
 
   instruction_pointer_ = 0;
+  
   bytecode_.clear();
+  labels_.clear();
 
   status = RunFinalPass();
   if (!IsSuccess(status)) {
@@ -50,6 +52,8 @@ AssemblerErrorHandler Assembler::AssembleProgram() {
 }
 
 AssemblerError Assembler::RunFirstPass() {
+  instruction_pointer_ = 0;
+
   for (size_t i = 0; i < lines_.size(); ++i) {
     current_line_number_ = i + 1;
     auto status = ProcessLine(lines_[i], AssemblyPass::kFirst);
@@ -67,13 +71,14 @@ AssemblerError Assembler::RunFinalPass() {
   return AssemblerError::kOk;
 }
 
-
 AssemblerError Assembler::ProcessLine(std::string_view line, AssemblyPass pass) {
   line = Trim(line);
   if (line.empty()) return AssemblerError::kOk;
 
   if (line.front() == ':') {
-    return RegisterLabel(line);
+    if (pass == AssemblyPass::kFirst)
+      return RegisterLabel(line);
+    return AssemblerError::kOk;
   }
 
   const Command* cmd = LookupCommand(line);
@@ -107,7 +112,6 @@ AssemblerError Assembler::ProcessLine(std::string_view line, AssemblyPass pass) 
   return AssemblerError::kOk;
 }
 
-
 const Command* Assembler::LookupCommand(std::string_view& line) const {
   auto token = NextToken(line);
 
@@ -128,37 +132,36 @@ AssemblerError Assembler::ParseArgument(std::string_view& line, Argument& arg) {
     int addr = LookupLabel(name);
     if (addr < 0) return AssemblerError::kInvalidLabel;
 
-    arg.type = ArgumentType::kLabel;
+    arg.type  = ArgumentType::kLabel;
     arg.value = addr;
     return AssemblerError::kOk;
   }
 
   try {
     arg.value = std::stoi(std::string(token));
-    arg.type = ArgumentType::kNumber;
+    arg.type  = ArgumentType::kNumber;
     return AssemblerError::kOk;
   } catch (...) {}
 
   if (token.size() == 3 && token[0] == 'R' && token[2] == 'X') {
-    int idx = token[1] - 'A';
-    arg.type = ArgumentType::kRegister;
-    arg.value = idx;
+    int idx    = token[1] - 'A';
+    arg.type   = ArgumentType::kRegister;
+    arg.value  = idx;
     return AssemblerError::kOk;
   }
 
   if (token.size() == 5 && token.front() == '[' && token.back() == ']') {
     auto inner = token.substr(1, 3);
-    int idx = inner[1] - 'A';
-    arg.type = ArgumentType::kMemoryAddress;
-    arg.value = idx;
+    int idx    = inner[1] - 'A';
+    arg.type   = ArgumentType::kMemoryAddress;
+    arg.value  = idx;
     return AssemblerError::kOk;
   }
 
   return AssemblerError::kWrongArgumentType;
 }
 
-
-AssemblerError Assembler::RegisterLabel(std::string_view& line) {
+AssemblerError Assembler::RegisterLabel(std::string_view line) {
   line.remove_prefix(1);
   auto name = NextToken(line);
 
@@ -172,7 +175,6 @@ int Assembler::LookupLabel(std::string_view name) const {
   return it->second;
 }
 
-
 AssemblerErrorHandler Assembler::WriteBinaryOutput(std::string_view filename) const {
   AssemblerErrorHandler handler;
 
@@ -182,7 +184,7 @@ AssemblerErrorHandler Assembler::WriteBinaryOutput(std::string_view filename) co
     return handler;
   }
 
-  out << MY_ASM_VERSION << " " << bytecode_.size() << "\n";
+  out << spu::kAsmVersion << " " << bytecode_.size() << "\n";
 
   for (int code : bytecode_) {
     out << code << " ";
@@ -190,7 +192,6 @@ AssemblerErrorHandler Assembler::WriteBinaryOutput(std::string_view filename) co
 
   return handler;
 }
-
 
 std::string_view Assembler::Trim(std::string_view s) {
   while (!s.empty() && isspace(static_cast<unsigned char>(s.front())))
