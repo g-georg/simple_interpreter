@@ -159,7 +159,7 @@ AssemblerError Assembler::ParseArgument(std::string_view& line, Argument& arg) {
 
 
 AssemblerError Assembler::RegisterLabel(std::string_view& line) {
-  line.remove_prefix(1);  // skip ':'
+  line.remove_prefix(1);
   auto name = NextToken(line);
 
   labels_[std::string(name)] = static_cast<int>(instruction_pointer_);
