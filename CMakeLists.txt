@@ -6,16 +6,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(asm
-  asm/src/main.cpp
-  asm/src/assembler.cpp
+  asm/source/main.cpp
+  asm/source/assembler.cpp
 )
-
 target_include_directories(asm PRIVATE
   ${CMAKE_SOURCE_DIR}/asm/include
 )
 
-target_compile_options(asm PRIVATE
-  -Wall
-  -Wextra
-  -Wpedantic
-)
+target_compile_options(asm PRIVATE -Wall -Wextra -Wpedantic)
