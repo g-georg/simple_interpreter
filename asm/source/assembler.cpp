@@ -20,6 +20,10 @@ AssemblerErrorHandler Assembler::ReadSourceFile(std::string_view filename) {
 
   std::string line;
   while (std::getline(file, line)) {
+    auto comment_pos = line.find(';');
+    if (comment_pos != std::string::npos)
+      line = line.substr(0, comment_pos);
+
     lines_.push_back(line);
   }
 
@@ -40,7 +44,6 @@ AssemblerErrorHandler Assembler::AssembleProgram() {
   instruction_pointer_ = 0;
   
   bytecode_.clear();
-  labels_.clear();
 
   status = RunFinalPass();
   if (!IsSuccess(status)) {
@@ -178,7 +181,7 @@ int Assembler::LookupLabel(std::string_view name) const {
 AssemblerErrorHandler Assembler::WriteBinaryOutput(std::string_view filename) const {
   AssemblerErrorHandler handler;
 
-  std::ofstream out(std::string(filename));
+  std::ofstream out{std::string(filename)};
   if (!out) {
     handler.AddError(AssemblerError::kInternalError);
     return handler;
