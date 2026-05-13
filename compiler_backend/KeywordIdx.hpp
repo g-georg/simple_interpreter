@@ -1,7 +1,7 @@
 #ifndef COMPILER_KEYWORDIDX_HPP
 #define COMPILER_KEYWORDIDX_HPP
-enum KeywordIdx
-{
+
+enum KeywordIdx {
     KEY_UNKNOWN = 0,
     KEY_ADD,
     KEY_SUB,

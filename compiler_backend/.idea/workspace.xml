@@ -4,17 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="BackendCodeEditorMiscSettings">
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
     <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
     <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
   </component>
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="fb25f434-045a-454d-9b15-3ecf6c512b5c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../include/common/constants.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../include/common/error_codes.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../include/common/opcodes.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../include/spu/commands.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../include/spu/spu.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tests/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AstParser.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/AstParser.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KeywordIdx.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/KeywordIdx.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KeywordInfo.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/KeywordInfo.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NamesTable.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/NamesTable.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NamesTable.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/NamesTable.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Node.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Node.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kKeywords.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/kKeywords.hpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,10 +46,10 @@
     <option name="minorVersion" value="3.4" />
     <option name="productBranch" value="Classic" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6,
-  "fromUser": false
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6,
+  &quot;fromUser&quot;: false
+}</component>
   <component name="ProjectId" id="3DausISVUvjx9E5uQM2DAHPEcEO" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -57,6 +67,11 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "compiler__backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "org.rust.first.attach.projects": "true",
     "vue.rearranger.settings.migration": "true"
   }
@@ -106,6 +121,7 @@
       <option name="presentableId" value="Default" />
       <updated>1778532706878</updated>
       <workItem from="1778532707907" duration="5000" />
+      <workItem from="1778700769896" duration="420000" />
     </task>
     <servers />
   </component>

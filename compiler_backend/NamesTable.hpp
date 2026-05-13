@@ -1,6 +1,9 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#ifndef NAMESTABLE_HPP
+#define NAMESTABLE_HPP
+
 class NamesTable {
 public:
     size_t findOrAdd(const std::string& name);
@@ -11,3 +14,4 @@ private:
     std::vector<std::string> names_;
     std::unordered_map<std::string, size_t> index_;
 };
+#endif
