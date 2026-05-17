@@ -77,7 +77,7 @@ const KeywordInfo kKeywords[] = {
 
 const size_t kKeywordsCount = sizeof(kKeywords) / sizeof(kKeywords[0]);
 
-const KeywordInfo *FindKeywordInfo(Keyword kw) {
+inline const KeywordInfo *FindKeywordInfo(Keyword kw) {
     for (size_t i = 0; i < kKeywordsCount; ++i) {
         if (kKeywords[i].kw == kw) {
             return &kKeywords[i];
@@ -86,7 +86,7 @@ const KeywordInfo *FindKeywordInfo(Keyword kw) {
     return nullptr;
 }
 
-const KeywordInfo *FindBuiltinFunction(Keyword kw) {
+inline const KeywordInfo *FindBuiltinFunction(Keyword kw) {
     for (size_t i = 0; i < kKeywordsCount; ++i) {
         if (kKeywords[i].kw == kw && kKeywords[i].isFunction) {
             return &kKeywords[i];

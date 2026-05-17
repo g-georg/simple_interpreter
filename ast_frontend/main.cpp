@@ -1,7 +1,7 @@
 #include <iostream>
-#include "Tokenizer.hpp"
-#include "Parser.hpp"
-#include "AstPrinter.hpp"
+#include "Tokenizer.h"
+#include "Parser.h"
+#include "AstPrinter.h"
 
 int main(int argc, char** argv) {
     if (argc != 2) {

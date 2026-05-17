@@ -55,25 +55,25 @@ struct AstNode {
 
 using NodePtr = std::unique_ptr<AstNode>;
 
-NodePtr NUM (ValueNumber n)              { return AstNode::makeNum(n);  }
-NodePtr NAME(size_t idx)                 { return AstNode::makeName(idx); }
+inline NodePtr NUM (ValueNumber n)              { return AstNode::makeNum(n);  }
+inline NodePtr NAME(size_t idx)                 { return AstNode::makeName(idx); }
 
-NodePtr KW(Keyword kw, NodePtr l = nullptr, NodePtr r = nullptr) {
+inline NodePtr KW(Keyword kw, NodePtr l = nullptr, NodePtr r = nullptr) {
     return AstNode::makeKeyword(kw, std::move(l), std::move(r));
 }
 
- NodePtr CONNECT_(NodePtr l, NodePtr r) { return KW(Keyword::Connect,   std::move(l), std::move(r)); }
- NodePtr ADD_    (NodePtr l, NodePtr r) { return KW(Keyword::Add,       std::move(l), std::move(r)); }
- NodePtr SUB_    (NodePtr l, NodePtr r) { return KW(Keyword::Sub,       std::move(l), std::move(r)); }
- NodePtr MUL_    (NodePtr l, NodePtr r) { return KW(Keyword::Mul,       std::move(l), std::move(r)); }
- NodePtr DIV_    (NodePtr l, NodePtr r) { return KW(Keyword::Div,       std::move(l), std::move(r)); }
- NodePtr POW_    (NodePtr l, NodePtr r) { return KW(Keyword::Pow,       std::move(l), std::move(r)); }
- NodePtr IF_     (NodePtr l, NodePtr r) { return KW(Keyword::If,        std::move(l), std::move(r)); }
- NodePtr ASSIGN_ (NodePtr l, NodePtr r) { return KW(Keyword::Assign,    std::move(l), std::move(r)); }
- NodePtr DECLARE_(NodePtr l, NodePtr r) { return KW(Keyword::Declarate, std::move(l), std::move(r)); }
- NodePtr PRINT_  (NodePtr l, NodePtr r) { return KW(Keyword::Print,     std::move(l), std::move(r)); }
- NodePtr RETURN_ (NodePtr l, NodePtr r) { return KW(Keyword::Return,    std::move(l), std::move(r)); }
- NodePtr CALL_   (NodePtr l, NodePtr r) { return KW(Keyword::Call,      std::move(l), std::move(r)); }
- NodePtr FUNC_   (NodePtr l, NodePtr r) { return KW(Keyword::Func,      std::move(l), std::move(r)); }
- NodePtr MAIN_   (NodePtr l, NodePtr r) { return KW(Keyword::Main,      std::move(l), std::move(r)); }
- NodePtr COMMA_  (NodePtr l, NodePtr r) { return KW(Keyword::Comma,     std::move(l), std::move(r)); }
+inline NodePtr CONNECT_(NodePtr l, NodePtr r) { return KW(Keyword::Connect,   std::move(l), std::move(r)); }
+inline NodePtr ADD_    (NodePtr l, NodePtr r) { return KW(Keyword::Add,       std::move(l), std::move(r)); }
+inline NodePtr SUB_    (NodePtr l, NodePtr r) { return KW(Keyword::Sub,       std::move(l), std::move(r)); }
+inline NodePtr MUL_    (NodePtr l, NodePtr r) { return KW(Keyword::Mul,       std::move(l), std::move(r)); }
+inline NodePtr DIV_    (NodePtr l, NodePtr r) { return KW(Keyword::Div,       std::move(l), std::move(r)); }
+inline NodePtr POW_    (NodePtr l, NodePtr r) { return KW(Keyword::Pow,       std::move(l), std::move(r)); }
+inline NodePtr IF_     (NodePtr l, NodePtr r) { return KW(Keyword::If,        std::move(l), std::move(r)); }
+inline NodePtr ASSIGN_ (NodePtr l, NodePtr r) { return KW(Keyword::Assign,    std::move(l), std::move(r)); }
+inline NodePtr DECLARE_(NodePtr l, NodePtr r) { return KW(Keyword::Declarate, std::move(l), std::move(r)); }
+inline NodePtr PRINT_  (NodePtr l, NodePtr r) { return KW(Keyword::Print,     std::move(l), std::move(r)); }
+inline NodePtr RETURN_ (NodePtr l, NodePtr r) { return KW(Keyword::Return,    std::move(l), std::move(r)); }
+inline NodePtr CALL_   (NodePtr l, NodePtr r) { return KW(Keyword::Call,      std::move(l), std::move(r)); }
+inline NodePtr FUNC_   (NodePtr l, NodePtr r) { return KW(Keyword::Func,      std::move(l), std::move(r)); }
+inline NodePtr MAIN_   (NodePtr l, NodePtr r) { return KW(Keyword::Main,      std::move(l), std::move(r)); }
+inline NodePtr COMMA_  (NodePtr l, NodePtr r) { return KW(Keyword::Comma,     std::move(l), std::move(r)); }
