@@ -4,6 +4,7 @@
 #include "Node.hpp"
 #include "NamesTable.hpp"
 #include <iostream>
+
 class AstParser {
 public:
     AstParser(const std::string& source, NamesTable& names)

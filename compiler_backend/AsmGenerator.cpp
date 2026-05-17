@@ -1,6 +1,7 @@
 #include "AsmGenerator.hpp"
 #include <cassert>
 #include <iostream>
+
 void AsmGenerator::generate(Node* root) {
     out_ << "; Compiled from rap language (ast_to_asm)\n\n";
     out_ << "CALL :main\n";

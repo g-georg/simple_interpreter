@@ -1,6 +1,8 @@
 #ifndef NODE_HPP
 #define NODE_HPP
+#include <cstddef>
 #include "kKeywords.hpp"
+
 struct Node {
     NodeType type = TYPE_UNKNOWN;
     int number = 0;
@@ -14,4 +16,5 @@ struct Node {
         delete right;
     }
 };
+
 #endif

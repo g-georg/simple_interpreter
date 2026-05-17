@@ -1,4 +1,5 @@
 #include "AstParser.hpp"
+
 Node* AstParser::parse() {
     skipSpaces();
     return parseNode();

@@ -1,8 +1,8 @@
+#ifndef NAMESTABLE_HPP
+#define NAMESTABLE_HPP
 #include <string>
 #include <unordered_map>
 #include <vector>
-#ifndef NAMESTABLE_HPP
-#define NAMESTABLE_HPP
 
 class NamesTable {
 public:

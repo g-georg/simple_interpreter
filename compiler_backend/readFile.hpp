@@ -1,6 +1,7 @@
 #ifndef COMPILER_READFILE_HPP
 #define COMPILER_READFILE_HPP
 #include <stdexcept>
+
 static std::string readFile(const std::string& path) {
     std::ifstream f(path);
     if (!f.is_open())
