@@ -11,15 +11,13 @@
 
 #include "Token.hpp"
 
-struct NameEntry
-{
+struct NameEntry {
     std::string name;
     size_t idx = 0;
 };
 
 class NameTable {
-
-public:
+ public:
     size_t findOrAdd(const char *str, size_t len) {
         for (size_t i = 0; i < entries_.size(); ++i) {
             if (entries_[i].name.size() == len && entries_[i].name.compare(0, len, str, len) == 0)
@@ -47,19 +45,18 @@ public:
         return nullptr;
     }
 
-private:
+ private:
     std::vector<NameEntry> entries_;
 };
 
 
 class SyntaxError : public std::runtime_error {
-public:
+ public:
     explicit SyntaxError(const std::string &msg) : std::runtime_error(msg) {}
 };
 
-class Tokenizer
-{
-public:
+class Tokenizer {
+ public:
     std::vector<Token> tokenizeFile(const std::string& fileName, NameTable& names) {
         std::ifstream f(fileName.c_str());
         if (!f)
@@ -71,7 +68,7 @@ public:
         return tokenize(source_, names);
     }
 
-private:
+ private:
 
     std::vector<Token> tokenize(const std::string& source, NameTable& names) {
         std::vector<Token> tokens;

@@ -3,16 +3,14 @@
 #include <string.h>
 #include <stddef.h>
 
-enum class NodeType
-{
+enum class NodeType {
     Unknown,
     ConstNum,
     Keyword,
     Name,
 };
 
-enum class Keyword
-{
+enum class Keyword {
     Unknown,
     Add, Sub, Mul, Div, Pow,
     Log, Ln, Sin, Cos, Tg, Ctg,
@@ -27,14 +25,12 @@ enum class Keyword
 
 using ValueNumber = int;
 
-struct NodeValue
-{
+struct NodeValue {
     ValueNumber number = 0;
     size_t idx = 0;
 };
 
-struct KeywordInfo
-{
+struct KeywordInfo {
     const char* langName;
     const char* standardName;
     Keyword kw;
@@ -99,8 +95,7 @@ const KeywordInfo *FindBuiltinFunction(Keyword kw) {
     return nullptr;
 }
 
-struct Token
-{
+struct Token {
     NodeType type = NodeType::Unknown;
     NodeValue value = {};
     size_t line = 1;

@@ -8,9 +8,8 @@
 #include "AstNode.hpp"
 #include "Tokenizer.hpp"
 
-class Parser
-{
-public:
+class Parser {
+ public:
     NodePtr parse(std::vector<Token> tokens, NameTable& names) {
         tokens_ = std::move(tokens);
         names_  = &names;
@@ -18,7 +17,7 @@ public:
         return parseGramma();
     }
 
-private:
+ private:
     std::vector<Token> tokens_;
     NameTable *names_ = nullptr;
     size_t cur_ = 0;

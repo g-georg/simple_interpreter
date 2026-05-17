@@ -1,6 +1,0 @@
-main xyeta() {
-    x := 5;
-    a := x * 4;
-    print(a);
-    return 0;
-}

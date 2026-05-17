@@ -3,16 +3,13 @@
 #include "Parser.hpp"
 #include "AstPrinter.hpp"
 
-int main(int argc, char** argv)
-{
-    if (argc != 2)
-    {
+int main(int argc, char** argv) {
+    if (argc != 2) {
         std::cerr << "Usage: " << argv[0] << " source.jpp\n";
         return 1;
     }
 
-    try
-    {
+    try {
         NameTable names;
         Tokenizer  tokenizer;
 
@@ -26,8 +23,7 @@ int main(int argc, char** argv)
 
         std::cout << "AST saved to ast_forest/tree.ast\n";
     }
-    catch (const std::exception& e)
-    {
+    catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << '\n';
         return 1;
     }

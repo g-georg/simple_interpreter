@@ -5,24 +5,21 @@
 #include "Token.hpp"
 
 
-struct AstNode
-{
+struct AstNode {
     NodeType  type  = NodeType::Unknown;
     NodeValue value = {};
 
     std::unique_ptr<AstNode> left;
     std::unique_ptr<AstNode> right;
 
-    static std::unique_ptr<AstNode> makeNum(ValueNumber n)
-    {
+    static std::unique_ptr<AstNode> makeNum(ValueNumber n) {
         auto node    = std::make_unique<AstNode>();
         node->type   = NodeType::ConstNum;
         node->value.number = n;
         return node;
     }
 
-    static std::unique_ptr<AstNode> makeName(size_t idx)
-    {
+    static std::unique_ptr<AstNode> makeName(size_t idx) {
         auto node    = std::make_unique<AstNode>();
         node->type   = NodeType::Name;
         node->value.idx = idx;
@@ -32,8 +29,7 @@ struct AstNode
     static std::unique_ptr<AstNode> makeKeyword(
             Keyword kw,
             std::unique_ptr<AstNode> l = nullptr,
-            std::unique_ptr<AstNode> r = nullptr)
-    {
+            std::unique_ptr<AstNode> r = nullptr) {
         auto node = std::make_unique<AstNode>();
         node->type = NodeType::Keyword;
         node->value.idx = static_cast<size_t>(kw);
@@ -42,8 +38,7 @@ struct AstNode
         return node;
     }
 
-    std::unique_ptr<AstNode> clone() const
-    {
+    std::unique_ptr<AstNode> clone() const {
         auto c = std::make_unique<AstNode>();
         c->type  = type;
         c->value = value;
@@ -63,8 +58,7 @@ using NodePtr = std::unique_ptr<AstNode>;
 NodePtr NUM (ValueNumber n)              { return AstNode::makeNum(n);  }
 NodePtr NAME(size_t idx)                 { return AstNode::makeName(idx); }
 
-NodePtr KW(Keyword kw, NodePtr l = nullptr, NodePtr r = nullptr)
-{
+NodePtr KW(Keyword kw, NodePtr l = nullptr, NodePtr r = nullptr) {
     return AstNode::makeKeyword(kw, std::move(l), std::move(r));
 }
 
