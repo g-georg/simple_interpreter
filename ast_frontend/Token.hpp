@@ -1,28 +1,23 @@
-#pragma once
+#pragma once 
 
-#include <cstddef>
-#include <cstring>
+#include <string.h>
+#include <stddef.h>
 
-enum class NodeType
-{
+enum class NodeType {
     Unknown,
     ConstNum,
     Keyword,
     Name,
 };
 
-enum class Keyword
-{
+enum class Keyword {
     Unknown,
     Add, Sub, Mul, Div, Pow,
-    Log, Ln,
-    Sin, Cos, Tg, Ctg,
+    Log, Ln, Sin, Cos, Tg, Ctg,
     Arcsin, Arccos, Arctg, Arcctg,
     Sh, Ch, Th, Cth,
     Input, Print,
-    Connect, Comma,
-    Declarate, Assign,
-    If,
+    Connect, Comma, Declarate, Assign, If,
     OpenParens, CloseParens,
     OpenBracket, CloseBracket,
     Func, Main, Return, Call,
@@ -30,23 +25,20 @@ enum class Keyword
 
 using ValueNumber = int;
 
-struct NodeValue
-{
-    ValueNumber number = 0;   
-    size_t      idx    = 0;
+struct NodeValue {
+    ValueNumber number = 0;
+    size_t idx = 0;
 };
 
-struct KeywordInfo
-{
+struct KeywordInfo {
     const char* langName;
     const char* standardName;
-    Keyword     kw;
-    bool        isFunction;
-    size_t      numberOfArgs;
+    Keyword kw;
+    bool isFunction;
+    size_t numberOfArgs;
 };
 
-static const KeywordInfo kKeywords[] =
-{
+const KeywordInfo kKeywords[] = {
     {"input",   "input",   Keyword::Input,       true,  0},
     {"print",   "print",   Keyword::Print,        true,  1},
     {"arcsin",  "arcsin",  Keyword::Arcsin,       true,  1},
@@ -83,28 +75,29 @@ static const KeywordInfo kKeywords[] =
     {"}",       "}",       Keyword::CloseBracket, false, 0},
 };
 
-static const size_t kKeywordsCount = sizeof(kKeywords) / sizeof(kKeywords[0]);
+const size_t kKeywordsCount = sizeof(kKeywords) / sizeof(kKeywords[0]);
 
-inline const KeywordInfo* FindKeywordInfo(Keyword kw) noexcept
-{
-    for (size_t i = 0; i < kKeywordsCount; ++i)
-        if (kKeywords[i].kw == kw)
+inline const KeywordInfo *FindKeywordInfo(Keyword kw) {
+    for (size_t i = 0; i < kKeywordsCount; ++i) {
+        if (kKeywords[i].kw == kw) {
             return &kKeywords[i];
+        }
+    }
     return nullptr;
 }
 
-inline const KeywordInfo* FindBuiltinFunction(Keyword kw) noexcept
-{
-    for (size_t i = 0; i < kKeywordsCount; ++i)
-        if (kKeywords[i].kw == kw && kKeywords[i].isFunction)
+inline const KeywordInfo *FindBuiltinFunction(Keyword kw) {
+    for (size_t i = 0; i < kKeywordsCount; ++i) {
+        if (kKeywords[i].kw == kw && kKeywords[i].isFunction) {
             return &kKeywords[i];
+        }
+    }
     return nullptr;
 }
 
-struct Token
-{
-    NodeType   type  = NodeType::Unknown;
-    NodeValue  value = {};
-    size_t     line  = 1;
-    size_t     col   = 1;
+struct Token {
+    NodeType type = NodeType::Unknown;
+    NodeValue value = {};
+    size_t line = 1;
+    size_t col = 1;
 };
