@@ -1,11 +1,9 @@
-#ifndef INCLUDE_SPU_SPU_H_
-#define INCLUDE_SPU_SPU_H_
+#pragma once
 
 #include <array>
 #include <cstddef>
 #include <cstdint>
-#include <functional>
-#include <stack>
+#include <std::stack>
 #include <vector>
 
 #include "common/constants.h"
@@ -14,14 +12,10 @@
 
 namespace spu {
 
-class Spu;
-
-using CommandHandler = std::function<RuntimeError(Spu*)>;
-
 class Spu {
  public:
-  Spu();
-  ~Spu();
+  Spu() = default;
+  ~Spu() = default;
 
   Spu(const Spu&) = delete;
   Spu& operator=(const Spu&) = delete;
@@ -32,33 +26,45 @@ class Spu {
   [[nodiscard]] RuntimeError Run();
   void Reset();
 
+  [[nodiscard]] size_t GetInstructionPointer() const noexcept;
+  void SetInstructionPointer(size_t ip) noexcept;
+  void AdvanceInstructionPointer(size_t delta = 1) noexcept;
+
+  [[nodiscard]] const vector<int32_t>& GetBytecode() const noexcept;
+  [[nodiscard]] size_t GetBytecodeSize() const noexcept;
+
+  [[nodiscard]] bool IsValidInstructionIndex(size_t index) const noexcept;
+  [[nodiscard]] bool IsValidRegisterIndex(size_t index) const noexcept;
+  [[nodiscard]] bool IsValidRamAddress(size_t address) const noexcept;
+
   [[nodiscard]] int32_t GetRegister(size_t index) const;
   [[nodiscard]] int32_t GetRam(size_t address) const;
-  [[nodiscard]] size_t GetInstructionPointer() const;
-  [[nodiscard]] const std::vector<int32_t>& GetBytecode() const;
 
-  [[nodiscard]] std::stack<int32_t>& GetDataStack();
-  [[nodiscard]] std::stack<int32_t>& GetReturnStack();
-  [[nodiscard]] const std::stack<int32_t>& GetDataStack() const;
-  [[nodiscard]] const std::stack<int32_t>& GetReturnStack() const;
+  [[nodiscard]] RuntimeError ReadRegister(size_t index, int32_t& value) const;
+  [[nodiscard]] RuntimeError WriteRegister(size_t index, int32_t value);
+
+  [[nodiscard]] RuntimeError ReadRam(size_t address, int32_t& value) const;
+  [[nodiscard]] RuntimeError WriteRam(size_t address, int32_t value);
+
+  [[nodiscard]] RuntimeError TryReadOperand(int32_t& operand) const;
+
+  [[nodiscard]] RuntimeError PushReturnAddress(int32_t value);
+  [[nodiscard]] RuntimeError PopReturnAddress(int32_t& value);
+
+  [[nodiscard]] std::stack<int32_t>& Datastd::stack() noexcept;
+  [[nodiscard]] std::stack<int32_t>& Returnstd::stack() noexcept;
+  [[nodiscard]] const std::stack<int32_t>& Datastd::stack() const noexcept;
+  [[nodiscard]] const std::stack<int32_t>& Returnstd::stack() const noexcept;
 
  private:
-  std::stack<int32_t> data_stack_;
-  std::stack<int32_t> return_stack_;
+  std::stack<int32_t> data_std::stack_;
+  std::stack<int32_t> return_std::stack_;
 
-  std::vector<int32_t> bytecode_;
+  vector<int32_t> bytecode_;
   size_t instruction_pointer_ = 0;
 
-  std::array<int32_t, kRegisterCount> registers_{};
-  std::array<int32_t, kMaxRamSize> ram_{};
-
-  std::array<CommandHandler, static_cast<size_t>(kMaxOpcodeValue) + 2> command_table_{};
-
-  [[nodiscard]] RuntimeError FetchOperands(int32_t* first, int32_t* second);
-  [[nodiscard]] bool IsValidRamAddress(size_t address) const;
-  void InitCommandTable();
+  array<int32_t, kRegisterCount> registers_{};
+  array<int32_t, kMaxRamSize> ram_{};
 };
 
-}
-
-#endif
+}  // namespace spu
