@@ -13,7 +13,7 @@ int main(int argc, char** argv)
 
     try
     {
-        NamesTable names;
+        NameTable names;
         Tokenizer  tokenizer;
 
         auto tokens = tokenizer.tokenizeFile(argv[1], names);

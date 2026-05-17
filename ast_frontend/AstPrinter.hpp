@@ -12,7 +12,7 @@ class AstPrinter
 public:
     void saveToFile(const std::string& fileName,
                     const AstNode&     root,
-                    const NamesTable&  names)
+                    const NameTable&  names)
     {
         std::ofstream f(fileName);
         if (!f)
@@ -31,7 +31,7 @@ private:
 
     void printNodeValue(std::ofstream& f,
                         const AstNode& n,
-                        const NamesTable& names)
+                        const NameTable& names)
     {
         switch (n.type)
         {
@@ -55,7 +55,7 @@ private:
 
     void printNode(std::ofstream& f,
                    const AstNode& n,
-                   const NamesTable& names,
+                   const NameTable& names,
                    int depth)
     {
         f << "( ";
