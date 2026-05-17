@@ -1,6 +1,8 @@
+#pragma once
 #include <string>
 #include <unordered_map>
 #include <vector>
+
 class NamesTable {
 public:
     size_t findOrAdd(const std::string& name);

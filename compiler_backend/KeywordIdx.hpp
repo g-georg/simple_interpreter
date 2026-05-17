@@ -1,7 +1,6 @@
-#ifndef COMPILER_KEYWORDIDX_HPP
-#define COMPILER_KEYWORDIDX_HPP
-enum KeywordIdx
-{
+#pragma once
+
+enum KeywordIdx {
     KEY_UNKNOWN = 0,
     KEY_ADD,
     KEY_SUB,
@@ -38,4 +37,3 @@ enum KeywordIdx
     KEY_RETURN,
     KEY_CALL,
 };
-#endif

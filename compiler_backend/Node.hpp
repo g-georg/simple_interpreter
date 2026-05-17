@@ -1,6 +1,8 @@
+#pragma once
+#include <cstddef>
 #include "kKeywords.hpp"
-struct Node
-{
+
+struct Node {
     NodeType type = TYPE_UNKNOWN;
     int number = 0;
     size_t idx = 0;
@@ -8,8 +10,7 @@ struct Node
     Node* left  = nullptr;
     Node* right = nullptr;
 
-    ~Node()
-    {
+    ~Node() {
         delete left;
         delete right;
     }

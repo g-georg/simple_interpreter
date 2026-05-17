@@ -1,4 +1,6 @@
+#pragma once
 #include "KeywordIdx.hpp"
+
 struct KeywordInfo
 {
     const char* asmName;

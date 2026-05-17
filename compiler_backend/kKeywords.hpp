@@ -1,14 +1,16 @@
-#ifndef COMPILER_KKEYWORDS_HPP
-#define COMPILER_KKEYWORDS_HPP
+#pragma once
+#include <cstddef>
+#include <string>
 #include "KeywordInfo.hpp"
-enum NodeType
-{
+
+enum NodeType {
     TYPE_UNKNOWN  = 0,
     TYPE_CONST_NUM,
     TYPE_KEYWORD,
     TYPE_VARIABLE,
     TYPE_NAME,
 };
+
 static const KeywordInfo kKeywords[] =
 {
     { "uknown",  "uknown",  KEY_UNKNOWN,       false, 0 },
@@ -47,20 +49,23 @@ static const KeywordInfo kKeywords[] =
     { "return",  "return",  KEY_RETURN,         true,  1 },
     { "call",    "call",    KEY_CALL,           false, 0 },
 };
+
 static const size_t kNumKeywords = sizeof(kKeywords) / sizeof(KeywordInfo);
-static const KeywordInfo* FindKeywordByName(const std::string& name)
-{
-    for (size_t i = 0; i < kNumKeywords; ++i)
-        if (name == kKeywords[i].asmName)
+
+static const KeywordInfo* FindKeywordByName(const std::string& name) {
+    for (size_t i = 0; i < kNumKeywords; ++i) {
+        if (name == kKeywords[i].asmName) {
             return &kKeywords[i];
+        }
+    }
     return nullptr;
 }
 
-static const KeywordInfo* FindKeywordByIdx(KeywordIdx idx)
-{
-    for (size_t i = 0; i < kNumKeywords; ++i)
-        if (kKeywords[i].idx == idx)
+static const KeywordInfo* FindKeywordByIdx(KeywordIdx idx) {
+    for (size_t i = 0; i < kNumKeywords; ++i) {
+        if (kKeywords[i].idx == idx) {
             return &kKeywords[i];
+        }
+    }
     return nullptr;
 }
-#endif
