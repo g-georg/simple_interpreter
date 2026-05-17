@@ -1,5 +1,4 @@
-#ifndef COMPILER_KKEYWORDS_HPP
-#define COMPILER_KKEYWORDS_HPP
+#pragma once
 #include <cstddef>
 #include <string>
 #include "KeywordInfo.hpp"
@@ -70,4 +69,3 @@ static const KeywordInfo* FindKeywordByIdx(KeywordIdx idx) {
     }
     return nullptr;
 }
-#endif

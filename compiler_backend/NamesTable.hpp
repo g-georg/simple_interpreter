@@ -1,5 +1,4 @@
-#ifndef NAMESTABLE_HPP
-#define NAMESTABLE_HPP
+#pragma once
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -14,4 +13,3 @@ private:
     std::vector<std::string> names_;
     std::unordered_map<std::string, size_t> index_;
 };
-#endif

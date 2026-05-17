@@ -1,5 +1,4 @@
-#ifndef COMPILER_ASTPARSER_HPP
-#define COMPILER_ASTPARSER_HPP
+#pragma once
 #include <string>
 #include "Node.hpp"
 #include "NamesTable.hpp"
@@ -26,6 +25,3 @@ private:
     Node* parseNode();
     Node* parseNodeContents();
 };
-
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef NODE_HPP
-#define NODE_HPP
+#pragma once
 #include <cstddef>
 #include "kKeywords.hpp"
 
@@ -16,5 +15,3 @@ struct Node {
         delete right;
     }
 };
-
-#endif

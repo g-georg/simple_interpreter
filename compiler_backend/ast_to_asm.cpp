@@ -1,5 +1,3 @@
-//запустить  ./ast_to_asm input.ast output.asm
-
 #include <fstream>
 #include <sstream>
 #include <string>

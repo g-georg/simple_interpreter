@@ -1,5 +1,4 @@
-#ifndef COMPILER_READFILE_HPP
-#define COMPILER_READFILE_HPP
+#pragma once
 #include <stdexcept>
 
 static std::string readFile(const std::string& path) {
@@ -10,4 +9,3 @@ static std::string readFile(const std::string& path) {
     ss << f.rdbuf();
     return ss.str();
 }
-#endif

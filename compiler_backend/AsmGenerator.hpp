@@ -1,5 +1,4 @@
-#ifndef COMPILER_ASMGENERATOR_HPP
-#define COMPILER_ASMGENERATOR_HPP
+#pragma once
 #include "Node.hpp"
 #include "NamesTable.hpp"
 #include <fstream>
@@ -25,6 +24,3 @@ private:
     void assembleMain(Node* node);
     void assembleCall(Node* node);
 };
-
-
-#endif
