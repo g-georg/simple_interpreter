@@ -1,27 +1,73 @@
 #pragma once
 
+#include <stddef.h>
+#include <stdint.h>
+
 #include "commands/command_base.h"
 
 namespace spu {
 
-class PushCommand final : public ICommand {
- public:
-  RuntimeError Execute(Spu& spu) const;
+class RegisterCommand : public StackCommand {
+ protected:
+  [[nodiscard]] static RuntimeError ReadRegisterIndex(Spu& spu,
+                                                      size_t& register_index);
 };
 
-class PopCommand final : public ICommand {
- public:
-  RuntimeError Execute(Spu& spu) const;
+class MemoryCommand : public RegisterCommand {
+ protected:
+  [[nodiscard]] static RuntimeError ReadRamAddressFromRegister(
+      Spu& spu,
+      size_t& address);
 };
 
-class PushrCommand final : public ICommand {
- public:
-  RuntimeError Execute(Spu& spu) const;
+class IoCommand : public ICommand {
+ protected:
+  IoCommand() = default;
 };
 
-class PoprCommand final : public ICommand {
+class PushCommand final : public StackCommand {
  public:
-  RuntimeError Execute(Spu& spu) const;
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
 };
 
-}
+class PopCommand final : public StackCommand {
+ public:
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
+};
+
+class PushrCommand final : public RegisterCommand {
+ public:
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
+};
+
+class PoprCommand final : public RegisterCommand {
+ public:
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
+};
+
+class PushmCommand final : public MemoryCommand {
+ public:
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
+};
+
+class PopmCommand final : public MemoryCommand {
+ public:
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
+};
+
+class InCommand final : public IoCommand {
+ public:
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
+};
+
+class OutCommand final : public StackCommand {
+ public:
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
+};
+
+class DrawCommand final : public IoCommand {
+ public:
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
+};
+
+}  // namespace spu

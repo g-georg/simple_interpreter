@@ -1,29 +1,32 @@
 #pragma once
 
-#include "command_base.h"
+#include "commands/command_base.h"
 
 namespace spu {
 
 class AddCommand final : public BinaryCommand {
  public:
-  RuntimeError Execute(Spu& spu) const;
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
 };
 
 class SubCommand final : public BinaryCommand {
  public:
-  RuntimeError Execute(Spu& spu) const;
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
 };
 
 class MulCommand final : public BinaryCommand {
  public:
-  RuntimeError Execute(Spu& spu) const;
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
 };
 
 class DivCommand final : public BinaryCommand {
  public:
-  RuntimeError Execute(Spu& spu) const;
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
 };
 
-}
+class SqrtCommand final : public StackCommand {
+ public:
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
+};
 
-#endif
+}  // namespace spu

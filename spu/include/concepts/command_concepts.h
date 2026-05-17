@@ -2,12 +2,11 @@
 
 #include <concepts>
 
+#include "commands/command_base.h"
+
 namespace spu {
 
-class ICommand;
+template <typename T>
+concept Command = std::derived_from<T, ICommand>;
 
-template<typename T>
-concept Command =
-    std::derived_from<T, ICommand>;
-
-}
+}  // namespace spu

@@ -2,9 +2,10 @@
 
 #include <array>
 #include <memory>
+#include <stddef.h>
 
-#include "common/opcodes.h"
 #include "common/error_codes.h"
+#include "common/opcodes.h"
 
 namespace spu {
 
@@ -13,13 +14,14 @@ class ICommand;
 
 class CommandDispatcher {
  public:
-  static RuntimeError Dispatch(Spu& spu, Opcode opcode);
+  [[nodiscard]] static RuntimeError Dispatch(Spu& spu, Opcode opcode);
 
  private:
-  static constexpr std::size_t kCommandCount =
-      static_cast<std::size_t>(Opcode::kCount);
+  static constexpr size_t kCommandCount = static_cast<size_t>(Opcode::kCount);
 
-  static const std::array<std::unique_ptr<ICommand>, kCommandCount> table_;
+  [[nodiscard]] static const std::array<std::unique_ptr<ICommand>,
+                                        kCommandCount>&
+  Table();
 };
 
-}
+}  // namespace spu

@@ -1,10 +1,10 @@
 #pragma once
 
-#include <cstdint>
+#include <stdint.h>
 
 namespace spu {
 
-enum class Opcode : std::int32_t {
+enum class Opcode : int32_t {
   kPush = 0,
   kPop,
   kAdd,

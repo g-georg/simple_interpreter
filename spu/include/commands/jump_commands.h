@@ -1,42 +1,69 @@
 #pragma once
 
+#include <stddef.h>
+#include <stdint.h>
+
 #include "commands/command_base.h"
 
 namespace spu {
 
-class JmpCommand final : public ICommand {
- public:
-  RuntimeError Execute(Spu& spu) const;
+class JumpCommandBase : public ICommand {
+ protected:
+  [[nodiscard]] static RuntimeError ReadTarget(Spu& spu, size_t& target);
+  [[nodiscard]] static RuntimeError ValidateTarget(const Spu& spu,
+                                                   int32_t raw_target);
 };
 
-class JbCommand final : public ICommand {
- public:
-  RuntimeError Execute(Spu& spu) const;
+class ConditionalJumpCommand : public JumpCommandBase {
+ protected:
+  [[nodiscard]] static RuntimeError FetchConditionOperands(Spu& spu,
+                                                           int32_t& lhs,
+                                                           int32_t& rhs);
 };
 
-class JbeCommand final : public ICommand {
+class JmpCommand final : public JumpCommandBase {
  public:
-  RuntimeError Execute(Spu& spu) const;
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
 };
 
-class JaCommand final : public ICommand {
+class JbCommand final : public ConditionalJumpCommand {
  public:
-  RuntimeError Execute(Spu& spu) const;
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
 };
 
-class JaeCommand final : public ICommand {
+class JbeCommand final : public ConditionalJumpCommand {
  public:
-  RuntimeError Execute(Spu& spu) const;
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
 };
 
-class JeCommand final : public ICommand {
+class JaCommand final : public ConditionalJumpCommand {
  public:
-  RuntimeError Execute(Spu& spu) const;
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
 };
 
-class JneCommand final : public ICommand {
+class JaeCommand final : public ConditionalJumpCommand {
  public:
-  RuntimeError Execute(Spu& spu) const;
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
 };
 
-}
+class JeCommand final : public ConditionalJumpCommand {
+ public:
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
+};
+
+class JneCommand final : public ConditionalJumpCommand {
+ public:
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
+};
+
+class CallCommand final : public JumpCommandBase {
+ public:
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
+};
+
+class RetCommand final : public ICommand {
+ public:
+  [[nodiscard]] RuntimeError Execute(Spu& spu) const override;
+};
+
+}  // namespace spu

@@ -1,13 +1,13 @@
 #pragma once
 
-#include <cstdint>
 #include <iostream>
-#include <string_view>
-#include <type_traits>
+#include <stdint.h>
+
+#include "common/concepts.h"
 
 namespace spu {
 
-enum class SpuError : std::uint32_t {
+enum class SpuError : uint32_t {
   kOk = 0,
   kNullStruct = 1u << 0,
   kFileOpen = 1u << 1,
@@ -17,7 +17,7 @@ enum class SpuError : std::uint32_t {
   kCommonError = 1u << 31
 };
 
-enum class RuntimeError : std::uint32_t {
+enum class RuntimeError : uint32_t {
   kOk = 0,
   kNullStruct = 1u << 0,
   kMissingArgument = 1u << 1,
@@ -43,16 +43,22 @@ constexpr RuntimeError operator|(RuntimeError lhs, RuntimeError rhs) noexcept {
   return static_cast<RuntimeError>(ToUnderlying(lhs) | ToUnderlying(rhs));
 }
 
-constexpr RuntimeError& operator|=(RuntimeError& lhs, RuntimeError rhs) noexcept {
+constexpr SpuError& operator|=(SpuError& lhs, SpuError rhs) noexcept {
   lhs = lhs | rhs;
   return lhs;
 }
 
-constexpr bool HasFlag(RuntimeError value, RuntimeError flag) noexcept {
-  return (ToUnderlying(value) & ToUnderlying(flag)) != 0;
+constexpr RuntimeError& operator|=(RuntimeError& lhs,
+                                   RuntimeError rhs) noexcept {
+  lhs = lhs | rhs;
+  return lhs;
 }
 
 constexpr bool HasFlag(SpuError value, SpuError flag) noexcept {
+  return (ToUnderlying(value) & ToUnderlying(flag)) != 0;
+}
+
+constexpr bool HasFlag(RuntimeError value, RuntimeError flag) noexcept {
   return (ToUnderlying(value) & ToUnderlying(flag)) != 0;
 }
 
@@ -78,6 +84,7 @@ inline void PrintSpuError(SpuError error) {
   if (HasFlag(error, SpuError::kBytecodeOverflow)) {
     std::cerr << "bytecode overflow; ";
   }
+
   std::cerr << '\n';
 }
 
