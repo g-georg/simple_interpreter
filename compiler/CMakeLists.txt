@@ -26,9 +26,3 @@ target_include_directories(compiler PRIVATE
     ${CMAKE_SOURCE_DIR}/ast_frontend
     ${CMAKE_SOURCE_DIR}/compiler_backend
 )
-
-target_compile_options(compiler PRIVATE 
-    -Wall 
-    -Wextra 
-    -Wpedantic
-)

@@ -1,8 +1,7 @@
 
 main example(){
-    x := 5;
-    y := 6;
-
+    xyeta := 5;
+    y := xyeta * 5 + xyeta * xyeta;
 
     return 0;
 }
