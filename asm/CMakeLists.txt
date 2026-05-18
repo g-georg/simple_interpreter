@@ -1,4 +1,5 @@
-make_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.20)
+
 project(simple_interpreter CXX)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -9,8 +10,10 @@ add_executable(asm
   asm/source/main.cpp
   asm/source/assembler.cpp
 )
+
 target_include_directories(asm PRIVATE
   ${CMAKE_SOURCE_DIR}/asm/include
+  ${CMAKE_SOURCE_DIR}/common     
 )
 
 target_compile_options(asm PRIVATE -Wall -Wextra -Wpedantic)
