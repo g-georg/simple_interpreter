@@ -7,7 +7,6 @@
 
 #include "common/constants.h"
 #include "common/error_codes.h"
-#include "common/opcodes.h"
 #include "containers/stack.h"
 
 namespace spu {

@@ -4,36 +4,10 @@
 #include <stdint.h>
 
 #include "common/concepts.h"
+#include "enums/runtime_error.h"
+#include "enums/spu_error.h"
 
 namespace spu {
-
-enum class SpuError : uint32_t {
-  kOk = 0,
-  kNullStruct = 1u << 0,
-  kFileOpen = 1u << 1,
-  kParseError = 1u << 2,
-  kWrongVersion = 1u << 3,
-  kBytecodeOverflow = 1u << 4,
-  kCommonError = 1u << 31
-};
-
-enum class RuntimeError : uint32_t {
-  kOk = 0,
-  kNullStruct = 1u << 0,
-  kMissingArgument = 1u << 1,
-  kStackUnderflow = 1u << 2,
-  kDivisionByZero = 1u << 3,
-  kSqrtNegativeArgument = 1u << 4,
-  kInvalidInput = 1u << 5,
-  kUnknownBytecode = 1u << 6,
-  kJmpArgumentIsNegative = 1u << 7,
-  kJmpArgumentOutOfRange = 1u << 8,
-  kCallArgumentIsNegative = 1u << 9,
-  kCallArgumentOutOfRange = 1u << 10,
-  kRetValueIsNegative = 1u << 11,
-  kInvalidRegister = 1u << 12,
-  kInvalidRamAddress = 1u << 13
-};
 
 constexpr SpuError operator|(SpuError lhs, SpuError rhs) noexcept {
   return static_cast<SpuError>(ToUnderlying(lhs) | ToUnderlying(rhs));

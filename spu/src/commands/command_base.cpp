@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <utility>
 
-#include "commands/command_dispatcher.h"
+#include "dispatcher/command_dispatcher.h"
 
 namespace spu {
 

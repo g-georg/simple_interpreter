@@ -5,7 +5,7 @@
 #include <stddef.h>
 
 #include "common/error_codes.h"
-#include "common/opcodes.h"
+#include "enums/opcode.h"
 
 namespace spu {
 
