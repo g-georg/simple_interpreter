@@ -1,19 +1,21 @@
 #include "assembler.hpp"
 
+#include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <string>
 #include <sstream>
 
 namespace assembler {
 
-AssemblerErrorHandler Assembler::ReadSourceFile(std::string_view filename) {
+AssemblerErrorHandler Assembler::ReadSourceFile(const std::filesystem::path& path) {
   AssemblerErrorHandler handler;
 
-  source_file_name_ = std::string(filename);
+  source_file_path_ = path;
 
-  std::ifstream file(source_file_name_);
+  std::ifstream file(source_file_path_);
   if (!file) {
-    std::cerr << "Failed to open file: " << source_file_name_ << "\n";
+    std::cerr << "Failed to open file: " << source_file_path_ << "\n";
     handler.AddError(AssemblerError::kInternalError);
     return handler;
   }
@@ -23,7 +25,6 @@ AssemblerErrorHandler Assembler::ReadSourceFile(std::string_view filename) {
     auto comment_pos = line.find(';');
     if (comment_pos != std::string::npos)
       line = line.substr(0, comment_pos);
-
     lines_.push_back(line);
   }
 
@@ -42,7 +43,6 @@ AssemblerErrorHandler Assembler::AssembleProgram() {
   }
 
   instruction_pointer_ = 0;
-  
   bytecode_.clear();
 
   status = RunFinalPass();
@@ -86,7 +86,7 @@ AssemblerError Assembler::ProcessLine(std::string_view line, AssemblyPass pass) 
 
   const Command* cmd = LookupCommand(line);
   if (!cmd) {
-    std::cerr << source_file_name_ << ":" << current_line_number_
+    std::cerr << source_file_path_ << ":" << current_line_number_
               << " Unknown command\n";
     return AssemblerError::kUnknownCommand;
   }
@@ -147,9 +147,9 @@ AssemblerError Assembler::ParseArgument(std::string_view& line, Argument& arg) {
   } catch (...) {}
 
   if (token.size() == 3 && token[0] == 'R' && token[2] == 'X') {
-    int idx    = token[1] - 'A';
-    arg.type   = ArgumentType::kRegister;
-    arg.value  = idx;
+    int idx   = token[1] - 'A';
+    arg.type  = ArgumentType::kRegister;
+    arg.value = idx;
     return AssemblerError::kOk;
   }
 
@@ -178,17 +178,16 @@ int Assembler::LookupLabel(std::string_view name) const {
   return it->second;
 }
 
-AssemblerErrorHandler Assembler::WriteBinaryOutput(std::string_view filename) const {
+AssemblerErrorHandler Assembler::WriteBinaryOutput(const std::filesystem::path& path) const {
   AssemblerErrorHandler handler;
 
-  std::ofstream out{std::string(filename)};
+  std::ofstream out{path};
   if (!out) {
     handler.AddError(AssemblerError::kInternalError);
     return handler;
   }
 
   out << spu::kAsmVersion << " " << bytecode_.size() << "\n";
-
   for (int code : bytecode_) {
     out << code << " ";
   }

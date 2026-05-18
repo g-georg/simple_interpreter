@@ -1,8 +1,26 @@
 #pragma once
 
 #include <cstdint>
+#include <concepts>
+#include <type_traits>
 
 namespace assembler {
+
+template<typename T>
+concept BitmaskEnum = std::is_enum_v<T> &&
+                      std::is_same_v<std::underlying_type_t<T>, uint32_t>;
+
+template<BitmaskEnum T>
+inline T operator|(T a, T b) {
+  return static_cast<T>(
+      static_cast<uint32_t>(a) | static_cast<uint32_t>(b));
+}
+
+template<BitmaskEnum T>
+inline bool HasFlag(T value, T flag) {
+  return (static_cast<uint32_t>(value) &
+          static_cast<uint32_t>(flag)) != 0;
+}
 
 enum class ArgumentType : uint32_t {
   kNone          = 0,
@@ -13,24 +31,14 @@ enum class ArgumentType : uint32_t {
   kUnknown       = 1u << 31,
 };
 
-inline ArgumentType operator|(ArgumentType a, ArgumentType b) {
-  return static_cast<ArgumentType>(
-      static_cast<uint32_t>(a) | static_cast<uint32_t>(b));
-}
-
-inline bool HasFlag(ArgumentType value, ArgumentType flag) {
-  return (static_cast<uint32_t>(value) &
-          static_cast<uint32_t>(flag)) != 0;
-}
-
-enum class AssemblyPass : std::uint8_t {
+enum class AssemblyPass : uint8_t {
   kFirst,
   kFinal,
 };
 
 struct Argument {
   ArgumentType type  = ArgumentType::kUnknown;
-  int value          = -1337;
+  int          value = 0;
 };
 
 }

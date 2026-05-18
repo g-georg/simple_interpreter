@@ -8,23 +8,13 @@ int main(int argc, char** argv) {
     return 1;
   }
 
-  assembler::Assembler assembler;
-
-  auto status = assembler.ReadSourceFile(argv[1]);
-  if (!status.Ok()) {
-    std::cerr << status.ToString() << "\n";
-    return 1;
-  }
-
-  status = assembler.AssembleProgram();
-  if (!status.Ok()) {
-    std::cerr << status.ToString() << "\n";
-    return 1;
-  }
-
-  status = assembler.WriteBinaryOutput("../spu/out.spu");
-  if (!status.Ok()) {
-    std::cerr << status.ToString() << "\n";
+  try {
+    assembler::Assembler assembler;
+    assembler.ReadSourceFile(argv[1]).ThrowIfError();
+    assembler.AssembleProgram().ThrowIfError();
+    assembler.WriteBinaryOutput("../spu/out.spu").ThrowIfError();
+  } catch (const assembler::AssemblerException& e) {
+    std::cerr << e.what() << "\n";
     return 1;
   }
 

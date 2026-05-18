@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <stdexcept>
 #include <string>
 
 namespace assembler {
@@ -17,6 +18,12 @@ enum class AssemblerError : uint32_t {
   kInvalidLabel           = 1 << 7,
   kTrashAfterCommand      = 1 << 8,
   kInternalError          = 1u << 31,
+};
+
+class AssemblerException : public std::runtime_error {
+ public:
+  explicit AssemblerException(const std::string& message)
+      : std::runtime_error(message) {}
 };
 
 inline AssemblerError operator|(AssemblerError a, AssemblerError b) {
@@ -40,11 +47,13 @@ class AssemblerErrorHandler {
 
   [[nodiscard]] uint32_t RawBits() const { return error_bits_; }
 
+  void ThrowIfError() const {
+    if (!Ok()) throw AssemblerException(ToString());
+  }
+
   [[nodiscard]] std::string ToString() const {
     if (Ok()) return "OK";
-
     std::string result;
-
     if (HasError(AssemblerError::kUnknownCommand))
       result += "Unknown command\n";
     if (HasError(AssemblerError::kMissingArgument))
@@ -54,9 +63,9 @@ class AssemblerErrorHandler {
     if (HasError(AssemblerError::kTrashSymbols))
       result += "Unexpected symbols after command\n";
     if (HasError(AssemblerError::kInvalidRegisterName))
-      result += "Invalid register name — expected e.g. RAX\n";
+      result += "Invalid register name\n";
     if (HasError(AssemblerError::kInvalidRegisterAddress))
-      result += "Invalid memory address register — expected e.g. [RAX]\n";
+      result += "Invalid memory address register\n";
     if (HasError(AssemblerError::kDuplicateLabel))
       result += "Duplicate label definition\n";
     if (HasError(AssemblerError::kInvalidLabel))
@@ -65,7 +74,6 @@ class AssemblerErrorHandler {
       result += "Unexpected symbols after command\n";
     if (HasError(AssemblerError::kInternalError))
       result += "Internal assembler error\n";
-
     return result;
   }
 

@@ -4,6 +4,7 @@
 #include "assembler_types.hpp"
 #include "command_table.hpp"
 
+#include <filesystem>
 #include <string>
 #include <string_view>
 #include <unordered_map>
@@ -15,9 +16,9 @@ class Assembler {
  public:
   Assembler() = default;
 
-  AssemblerErrorHandler ReadSourceFile(std::string_view filename);
+  AssemblerErrorHandler ReadSourceFile(const std::filesystem::path& path);
   AssemblerErrorHandler AssembleProgram();
-  AssemblerErrorHandler WriteBinaryOutput(std::string_view filename) const;
+  AssemblerErrorHandler WriteBinaryOutput(const std::filesystem::path& path) const;
 
  private:
   AssemblerError RunFirstPass();
@@ -25,25 +26,21 @@ class Assembler {
 
   AssemblerError ProcessLine(std::string_view line, AssemblyPass pass);
 
-  const Command* LookupCommand(std::string_view& line) const;
-  AssemblerError ParseArgument(std::string_view& line, Argument& arg);
+  const Command*  LookupCommand(std::string_view& line) const;
+  AssemblerError  ParseArgument(std::string_view& line, Argument& arg);
 
-  AssemblerError RegisterLabel(std::string_view line);
-  int LookupLabel(std::string_view name) const;
+  AssemblerError  RegisterLabel(std::string_view line);
+  int             LookupLabel(std::string_view name) const;
 
   static std::string_view Trim(std::string_view s);
   static std::string_view NextToken(std::string_view& line);
 
- private:
-  std::vector<std::string> lines_;
-  std::string source_file_name_;
-
-  std::vector<int> bytecode_;
-  size_t instruction_pointer_ = 0;
-
+  std::vector<std::string>             lines_;
+  std::filesystem::path                source_file_path_;
+  std::vector<int>                     bytecode_;
+  size_t                               instruction_pointer_ = 0;
   std::unordered_map<std::string, int> labels_;
-
-  size_t current_line_number_ = 0;
+  size_t                               current_line_number_ = 0;
 };
 
 }
