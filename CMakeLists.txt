@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Assembler utility
 add_executable(asm
   asm/source/main.cpp
   asm/source/assembler.cpp
@@ -14,3 +15,6 @@ target_include_directories(asm PRIVATE
 )
 
 target_compile_options(asm PRIVATE -Wall -Wextra -Wpedantic)
+
+# Build unified compiler from the `compiler/` subdirectory
+add_subdirectory(compiler)
