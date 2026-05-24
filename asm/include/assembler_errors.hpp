@@ -24,6 +24,28 @@ class AssemblerException : public std::runtime_error {
  public:
   explicit AssemblerException(const std::string& message)
       : std::runtime_error(message) {}
+
+  virtual std::string ErrorType() const { return "Assembler error"; }
+
+  virtual ~AssemblerException() = default;
+};
+
+class UnknownCommandException : public AssemblerException {
+ public:
+  explicit UnknownCommandException(const std::string& cmd, size_t line)
+      : AssemblerException("Line " + std::to_string(line) +
+                           ": Unknown command '" + cmd + "'") {}
+
+  std::string ErrorType() const override { return "Unknown command"; }
+};
+
+class InvalidLabelException : public AssemblerException {
+ public:
+  explicit InvalidLabelException(const std::string& label, size_t line)
+      : AssemblerException("Line " + std::to_string(line) +
+                           ": Invalid label '" + label + "'") {}
+
+  std::string ErrorType() const override { return "Invalid label"; }
 };
 
 inline AssemblerError operator|(AssemblerError a, AssemblerError b) {

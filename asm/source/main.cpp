@@ -13,8 +13,14 @@ int main(int argc, char** argv) {
     assembler.ReadSourceFile(argv[1]).ThrowIfError();
     assembler.AssembleProgram().ThrowIfError();
     assembler.WriteBinaryOutput("../spu/out.spu").ThrowIfError();
+  } catch (const assembler::UnknownCommandException& e) {
+    std::cerr << "[" << e.ErrorType() << "] " << e.what() << "\n";
+    return 1;
+  } catch (const assembler::InvalidLabelException& e) {
+    std::cerr << "[" << e.ErrorType() << "] " << e.what() << "\n";
+    return 1;
   } catch (const assembler::AssemblerException& e) {
-    std::cerr << e.what() << "\n";
+    std::cerr << "[" << e.ErrorType() << "] " << e.what() << "\n";
     return 1;
   }
 

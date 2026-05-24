@@ -86,9 +86,7 @@ AssemblerError Assembler::ProcessLine(std::string_view line, AssemblyPass pass) 
 
   const Command* cmd = LookupCommand(line);
   if (!cmd) {
-    std::cerr << source_file_path_ << ":" << current_line_number_
-              << " Unknown command\n";
-    return AssemblerError::kUnknownCommand;
+    throw UnknownCommandException(std::string(line), current_line_number_);
   }
 
   if (pass == AssemblyPass::kFirst) {
@@ -133,8 +131,9 @@ AssemblerError Assembler::ParseArgument(std::string_view& line, Argument& arg) {
   if (token.front() == ':') {
     auto name = token.substr(1);
     int addr = LookupLabel(name);
-    if (addr < 0) return AssemblerError::kInvalidLabel;
-
+    if (addr < 0) {
+        throw InvalidLabelException(std::string(name), current_line_number_);
+    }
     arg.type  = ArgumentType::kLabel;
     arg.value = addr;
     return AssemblerError::kOk;
