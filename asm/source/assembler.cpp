@@ -31,6 +31,14 @@ AssemblerErrorHandler Assembler::ReadSourceFile(const std::filesystem::path& pat
   return handler;
 }
 
+AssemblerErrorHandler Assembler::ReadSourceLines(const std::vector<std::string>& lines) {
+  AssemblerErrorHandler handler;
+  
+  lines_ = lines;
+  source_file_path_ = "<interactive>";
+  return handler;
+}
+
 AssemblerErrorHandler Assembler::AssembleProgram() {
   AssemblerErrorHandler handler;
 
