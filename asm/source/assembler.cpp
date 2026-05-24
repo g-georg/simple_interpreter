@@ -92,9 +92,11 @@ AssemblerError Assembler::ProcessLine(std::string_view line, AssemblyPass pass) 
     return AssemblerError::kOk;
   }
 
+  std::string_view original_line = line;
+
   const Command* cmd = LookupCommand(line);
   if (!cmd) {
-    throw UnknownCommandException(std::string(line), current_line_number_);
+    throw UnknownCommandException(std::string(original_line), current_line_number_);
   }
 
   if (pass == AssemblyPass::kFirst) {
