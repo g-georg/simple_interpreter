@@ -115,13 +115,7 @@ AssemblerError Assembler::ProcessLine(std::string_view line, AssemblyPass pass) 
 
 const Command* Assembler::LookupCommand(std::string_view& line) const {
   auto token = NextToken(line);
-
-  for (const auto& cmd : kCommandsTable) {
-    if (cmd.name == token) {
-      return &cmd;
-    }
-  }
-  return nullptr;
+  return FindByName(kCommandsTable, token);
 }
 
 AssemblerError Assembler::ParseArgument(std::string_view& line, Argument& arg) {

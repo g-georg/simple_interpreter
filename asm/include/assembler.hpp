@@ -4,6 +4,7 @@
 #include "assembler_types.hpp"
 #include "command_table.hpp"
 
+#include <concepts>
 #include <filesystem>
 #include <string>
 #include <string_view>
@@ -12,6 +13,19 @@
 
 namespace assembler {
 
+template<typename T>
+concept NamedEntity = requires(T t) {
+  { t.name } -> std::convertible_to<std::string_view>;
+};
+
+template<NamedEntity T, size_t N>
+const T* FindByName(const std::array<T, N>& table, std::string_view name) {
+  for (const auto& entry : table) {
+    if (entry.name == name) return &entry;
+  }
+  return nullptr;
+}
+
 class Assembler {
  public:
   Assembler() = default;
@@ -19,6 +33,7 @@ class Assembler {
   AssemblerErrorHandler ReadSourceFile(const std::filesystem::path& path);
   AssemblerErrorHandler AssembleProgram();
   AssemblerErrorHandler WriteBinaryOutput(const std::filesystem::path& path) const;
+  AssemblerErrorHandler ReadSourceLines(const std::vector<std::string>& lines);
 
  private:
   AssemblerError RunFirstPass();
