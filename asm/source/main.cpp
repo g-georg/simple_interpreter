@@ -1,10 +1,19 @@
 #include "assembler.hpp"
+#include "interactive.hpp"
 
 #include <iostream>
+#include <string>
 
 int main(int argc, char** argv) {
+  if (argc == 2 && std::string(argv[1]) == "--interactive") {
+    assembler::InteractiveMode interactive;
+    interactive.Run();
+    return 0;
+  }
+
   if (argc != 2) {
     std::cerr << "Usage: " << argv[0] << " <source.asm>\n";
+    std::cerr << "       " << argv[0] << " --interactive\n";
     return 1;
   }
 
