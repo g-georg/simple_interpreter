@@ -1,0 +1,6 @@
+*.jpp
+<<<<<<< HEAD
+.vscode/
+=======
+.vscode
+>>>>>>> f2f5d38 (dev)
